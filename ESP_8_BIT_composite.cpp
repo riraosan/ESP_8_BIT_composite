@@ -646,12 +646,14 @@ extern "C" void IRAM_ATTR video_isr(volatile void* vbuf) {
  * @brief Constructor for ESP_8_BIT composite video wrapper class
  * @param ntsc True (or nonzero) for NTSC mode, False (or zero) for PAL mode
  */
-ESP_8_BIT_composite::ESP_8_BIT_composite(int ntsc) {
+ESP_8_BIT_composite::ESP_8_BIT_composite(int ntsc) : _started(false),
+                                                     _isDoubleBuffer(true)
+{
   _pal_ = !ntsc;
-  if (NULL == _instance_) {
+  if (NULL == _instance_)
+  {
     _instance_ = this;
   }
-  _started = false;
   _bufferA = NULL;
   _bufferB = NULL;
 }
@@ -714,7 +716,12 @@ void ESP_8_BIT_composite::begin() {
   _started = true;
 
   _bufferA = frameBufferAlloc();
-  _bufferB = frameBufferAlloc();
+
+  if (_isDoubleBuffer) {
+    _bufferB = frameBufferAlloc();
+  } else {
+    _bufferB = _bufferA;
+  }
 
   _lines      = _bufferA;
   _backBuffer = _bufferB;

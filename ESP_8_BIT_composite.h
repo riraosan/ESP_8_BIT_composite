@@ -98,6 +98,13 @@ public:
    */
   uint32_t getBufferSwapCount();
 
+  /*
+   * @brief Enable Double Buffer
+   */
+  void enableDoubleBuffer(bool isEnable){
+    _isDoubleBuffer = isEnable;
+  }
+
 private:
   /*
    * @brief Check to ensure this instance is the first and only allowed instance
@@ -118,6 +125,12 @@ private:
    * @brief Free memory allocated by frameBufferAlloc();
    */
   void frameBufferFree(uint8_t** frameBuffer);
+
+  /*
+   * @brief Switch Double buffer and Single buffer
+   */
+  bool _isDoubleBuffer;
+
 };
 
 #endif  // ESP_8_BIT_COMPOSITE_H
