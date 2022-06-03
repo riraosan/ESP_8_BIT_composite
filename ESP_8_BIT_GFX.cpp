@@ -79,8 +79,8 @@ ESP_8_BIT_GFX::ESP_8_BIT_GFX(bool ntsc) {
 /*
  * @brief Call once to set up the API with self-allocated frame buffer.
  */
-void ESP_8_BIT_GFX::begin() {
-  _pVideo->begin();
+void ESP_8_BIT_GFX::begin(bool isDoubleBuffer) {
+  _pVideo->begin(isDoubleBuffer);
 }
 
 /*

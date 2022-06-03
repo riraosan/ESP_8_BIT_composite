@@ -76,7 +76,7 @@ public:
   /*
    * @brief Video subsystem setup: allocate frame buffer and start engine
    */
-  void begin();
+  void begin(bool isDoubleBuffer);
 
   /*
    * @brief Wait for current frame to finish rendering
@@ -98,13 +98,6 @@ public:
    */
   uint32_t getBufferSwapCount();
 
-  /*
-   * @brief Enable Double Buffer
-   */
-  void enableDoubleBuffer(bool isEnable){
-    _isDoubleBuffer = isEnable;
-  }
-
 private:
   /*
    * @brief Check to ensure this instance is the first and only allowed instance
@@ -125,11 +118,6 @@ private:
    * @brief Free memory allocated by frameBufferAlloc();
    */
   void frameBufferFree(uint8_t** frameBuffer);
-
-  /*
-   * @brief Switch Double buffer and Single buffer
-   */
-  bool _isDoubleBuffer;
 
 };
 

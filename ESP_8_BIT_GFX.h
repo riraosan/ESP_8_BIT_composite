@@ -76,7 +76,7 @@ public:
   /*
    * @brief Call once to set up the API with self-allocated frame buffer.
    */
-  void begin();
+  void begin(bool isDoubleBuffer);
 
   /*
    * @brief Wait for swap of front and back buffer. Gathers performance
