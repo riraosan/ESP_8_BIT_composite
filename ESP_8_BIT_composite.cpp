@@ -21,8 +21,6 @@
 
 #include "ESP_8_BIT_composite.h"
 
-static const char* TAG = "ESP_8_BIT";
-
 static ESP_8_BIT_composite* _instance_ = NULL;
 static int                  _pal_      = 0;
 
@@ -559,9 +557,9 @@ void IRAM_ATTR pal_sync2(uint16_t* line, int width, int swidth) {
 
 uint8_t DRAM_ATTR _sync_type[8] = {0, 0, 0, 3, 3, 2, 0, 0};
 void IRAM_ATTR    pal_sync(uint16_t* line, int i) {
-  uint8_t t = _sync_type[i - 304];
-  pal_sync2(line, _line_width / 2, t & 2);
-  pal_sync2(line + _line_width / 2, _line_width / 2, t & 1);
+     uint8_t t = _sync_type[i - 304];
+     pal_sync2(line, _line_width / 2, t & 2);
+     pal_sync2(line + _line_width / 2, _line_width / 2, t & 1);
 }
 
 // Wait for front and back buffers to swap before starting drawing
@@ -695,7 +693,7 @@ ESP_8_BIT_composite::~ESP_8_BIT_composite() {
  */
 void ESP_8_BIT_composite::instance_check() {
   if (_instance_ != this) {
-    ESP_LOGE(TAG, "Only one instance of ESP_8_BIT_composite class is allowed.");
+    log_e("Only one instance of ESP_8_BIT_composite class is allowed.");
     ESP_ERROR_CHECK(ESP_FAIL);
   }
 }
@@ -707,7 +705,7 @@ void ESP_8_BIT_composite::begin(bool isDoubleBuffer) {
   instance_check();
 
   if (_started) {
-    ESP_LOGE(TAG, "begin() is only allowed to be called once.");
+    log_e("begin() is only allowed to be called once.");
     ESP_ERROR_CHECK(ESP_FAIL);
   }
   _started = true;
@@ -762,14 +760,14 @@ uint8_t** ESP_8_BIT_composite::frameBufferAlloc() {
 
   lineArray = new uint8_t*[linesPerFrame];
   if (NULL == lineArray) {
-    ESP_LOGE(TAG, "Frame lines array allocation fail");
+    log_e("Frame lines array allocation fail");
     ESP_ERROR_CHECK(ESP_FAIL);
   }
 
   for (uint8_t chunk = 0; chunk < chunksPerFrame; chunk++) {
     lineChunk = new uint8_t[chunkSize];
     if (NULL == lineChunk) {
-      ESP_LOGE(TAG, "Frame buffer chunk allocation fail");
+      log_e("Frame buffer chunk allocation fail");
       ESP_ERROR_CHECK(ESP_FAIL);
     }
     lineStep = lineChunk;

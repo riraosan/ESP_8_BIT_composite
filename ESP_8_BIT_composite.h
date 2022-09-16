@@ -118,7 +118,6 @@ private:
    * @brief Free memory allocated by frameBufferAlloc();
    */
   void frameBufferFree(uint8_t** frameBuffer);
-
 };
 
 #endif  // ESP_8_BIT_COMPOSITE_H

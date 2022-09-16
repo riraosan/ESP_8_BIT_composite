@@ -63,7 +63,7 @@ modified @riraosan
 ESP_8_BIT_GFX::ESP_8_BIT_GFX(bool ntsc) {
   _pVideo = new ESP_8_BIT_composite(ntsc);
   if (NULL == _pVideo) {
-    ESP_LOGE(TAG, "Video signal generator allocation failed");
+    log_e("Video signal generator allocation failed");
     ESP_ERROR_CHECK(ESP_FAIL);
   }
 
@@ -93,18 +93,17 @@ uint32_t ESP_8_BIT_GFX::perfData() {
   uint32_t fraction = getWaitFraction();
 
   if (_perfEnd < _perfStart) {
-    ESP_LOGE(TAG, "Performance end time is earlier than start time.");
+    log_e("Performance end time is earlier than start time.");
   } else {
     uint32_t duration = _perfEnd - _perfStart;
     if (duration < _waitTally) {
-      ESP_LOGE(TAG, "Overall time duration is less than tally of wait times.");
+      log_e("Overall time duration is less than tally of wait times.");
     } else {
       uint32_t frames         = _pVideo->getRenderedFrameCount() - _frameStart;
       uint32_t swaps          = _pVideo->getBufferSwapCount() - _swapStart;
       uint32_t wholePercent   = fraction / 100;
       uint32_t decimalPercent = fraction % 100;
-      ESP_LOGI(TAG, "Waited %d.%d%%, missed %d of %d frames",
-               wholePercent, decimalPercent, frames - swaps, frames);
+      log_i("Waited %d.%d%%, missed %d of %d frames", wholePercent, decimalPercent, frames - swaps, frames);
     }
   }
   _perfStart = 0;
